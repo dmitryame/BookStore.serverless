@@ -59,15 +59,15 @@ functions:
           private: false
           cors: true
 
-  # booksGet: # http endpoint
-  #   handler: api/src/controllers/books/read.main
-  #   description: (C'R'UD) - photo
-  #   events:
-  #     - http:
-  #         path: books/{id}
-  #         method: get
-  #         cors: true
-  #
+  booksGet: # http endpoint
+    handler: api/src/controllers/books/read.main
+    description: (C'R'UD) - photo
+    events:
+      - http:
+          path: books/{id}
+          method: get
+          cors: true
+  
   # booksPut: # http endpoint, which updates a record in DB
   #   handler: api/src/controllers/books/update.main
   #   description: (CR'U'D) - photo

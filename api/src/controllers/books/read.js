@@ -1,4 +1,5 @@
 import Book from '../../models/book'
+import corsHeaders from '../../../../config/consts'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -19,11 +20,7 @@ export async function main(event, context, callback) {
     if (!book) {
       const response = {
         statusCode: 404,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        },
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Book not found' }),
       }
       callback(null, response)
@@ -34,11 +31,7 @@ export async function main(event, context, callback) {
 
     const response = {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Unable to retrieve a Book' }),
     }
     callback(null, response)
@@ -48,11 +41,7 @@ export async function main(event, context, callback) {
   // Resond to request indicating the book was created
   const response = {
     statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-      'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-    },
+    headers: corsHeaders,
     body: JSON.stringify({ status: 'success', book }),
   }
   callback(null, response)

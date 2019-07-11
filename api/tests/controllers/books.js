@@ -10,13 +10,13 @@ import Book from '../../src/models/book'
 const request = supertest(config().HOST)
 const { expect } = chai // BDD/TDD assertion library
 
-function createTestBook({
+async function createTestBook({
   title, description, author, tags,
 }) {
   // create and safe record
   let book
   try {
-    book = Book.create({
+    book = await Book.create({
       title,
       description,
       author,
@@ -105,6 +105,40 @@ describe('books', () => {
       expect(response.status).to.equal(200)
       expect(response.body.status).to.equal('success')
       expect(response.body.books.length).to.equal(2)
+    })
+  })
+
+  describe('read', () => {
+    it('should not be able to find a book which does not exist', async () => {
+      const response =
+      await request
+        .get('/books/0')
+        .set('Content-Type', 'application/json')
+
+      expect(response.status).to.equal(404)
+      expect(response.body.error).to.equal('Book not found')
+    })
+
+    it('should be able to find one book by id', async () => {
+      const testBook = await createTestBook({
+        title: 'book 1',
+        description: 'descriuption 1',
+        author: 'author 1',
+        tags: 'test, one, two, tree',
+      })
+
+      const response =
+        await request
+          .get(`/books/${testBook.id}`)
+          .set('Content-Type', 'application/json')
+
+
+      expect(response.status).to.equal(200)
+      expect(response.body.status).to.equal('success')
+      expect(response.body.book.title).to.equal(testBook.title)
+      expect(response.body.book.description).to.equal(testBook.description)
+      expect(response.body.book.author).to.equal(testBook.author)
+      expect(response.body.book.tags).to.equal(testBook.tags)
     })
   })
 })
