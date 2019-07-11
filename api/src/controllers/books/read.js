@@ -1,6 +1,4 @@
-import Sequelize from 'sequelize'
-
-import Photo from '../../models/photo'
+import Book from '../../models/book'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -10,21 +8,15 @@ export async function main(event, context, callback) {
 
   const { id } = event.pathParameters
 
-  // retrieve photos
-  let photo
+  // retrieve books
+  let book
   try {
-    photo = await Photo.findOne({
+    book = await Book.findOne({
       where: {
         id,
-        active: true,
-      },
-      attributes: {
-        include: [
-          [Sequelize.literal('(SELECT COUNT("Comments") FROM "Comments" WHERE "Comments"."photoId" = "Photo"."id" and "active" = true)'), 'commentsCount'],
-        ],
       },
     })
-    if (!photo) {
+    if (!book) {
       const response = {
         statusCode: 404,
         headers: {
@@ -32,13 +24,13 @@ export async function main(event, context, callback) {
           'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         },
-        body: JSON.stringify({ error: 'not found' }),
+        body: JSON.stringify({ error: 'Book not found' }),
       }
       callback(null, response)
       return false
     }
   } catch (err) {
-    console.log('Unable to retrieve a Photo', err)
+    console.log('Unable to retrieve a Book', err)
 
     const response = {
       statusCode: 500,
@@ -47,13 +39,13 @@ export async function main(event, context, callback) {
         'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
       },
-      body: JSON.stringify({ error: 'Unable to retrieve a Photo' }),
+      body: JSON.stringify({ error: 'Unable to retrieve a Book' }),
     }
     callback(null, response)
     return false
   }
 
-  // Resond to request indicating the photo was created
+  // Resond to request indicating the book was created
   const response = {
     statusCode: 200,
     headers: {
@@ -61,7 +53,7 @@ export async function main(event, context, callback) {
       'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
     },
-    body: JSON.stringify({ status: 'success', photo }),
+    body: JSON.stringify({ status: 'success', book }),
   }
   callback(null, response)
   return true

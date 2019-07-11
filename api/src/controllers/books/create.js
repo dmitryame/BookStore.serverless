@@ -1,9 +1,6 @@
 import moment from 'moment'
 
-import Photo from '../../models/photo'
-import AbuseReport from '../../models/abuseReport'
-
-const AWS = require('aws-sdk')
+import Book from '../../models/book'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -28,17 +25,6 @@ export async function main(event, context, callback) {
     return false
   }
 
-  const c = await AbuseReport.count({ where: { uuid } })
-  console.log(`count of abuse: ${c}`)
-  if (c > 3) {
-    const response = {
-      statusCode: 401,
-      body: JSON.stringify({ error: 'Anauthorized.' }),
-    }
-    callback(null, response)
-    return false
-  }
-
   console.log('uuid:', uuid)
   console.log('location:', location)
 
@@ -46,9 +32,9 @@ export async function main(event, context, callback) {
   const updatedAt = createdAt
 
   // create and safe record
-  let photo
+  let book
   try {
-    photo = await Photo.create({
+    book = await Book.create({
       uuid,
       location,
       likes,
@@ -56,32 +42,21 @@ export async function main(event, context, callback) {
       updatedAt,
     })
   } catch (err) {
-    console.log('unable to create Photo', err)
+    console.log('unable to create Book', err)
     const response = {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Unable to create a new Photo' }),
+      body: JSON.stringify({ error: 'Unable to create a new Book' }),
     }
     callback(null, response)
     return false
   }
 
-  const s3 = new AWS.S3()
-  const s3Params = {
-    Bucket: process.env.IMAGE_BUCKET,
-    Key: `${photo.id}`,
-    ContentType: 'image/jpeg',
-    Expires: 60, // expires in 1 minute, after that request a new URL
-    ACL: 'public-read',
-  }
-  const uploadURL = s3.getSignedUrl('putObject', s3Params)
-
-  // Resond to request indicating the photo was created
+  // Resond to request indicating the book was created
   const response = {
     statusCode: 201,
     body: JSON.stringify({
       status: 'success',
-      uploadURL,
-      photo,
+      book,
     }),
   }
   callback(null, response)

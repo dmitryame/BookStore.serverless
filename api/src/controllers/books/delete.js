@@ -1,4 +1,4 @@
-import Photo from '../../models/photo'
+import Book from '../../models/book'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -8,16 +8,16 @@ export async function main(event, context, callback) {
 
   const { id } = event.pathParameters
 
-  // delete photos
+  // delete books
   // update photos
-  let photo
+  let book
   try {
-    photo = await Photo.update(
+    book = await Book.update(
       { active: false },
       { where: { id } },
     )
 
-    if (photo[0] === 0) {
+    if (book[0] === 0) {
       const response = {
         statusCode: 404,
         body: JSON.stringify({ error: 'not found' }),
@@ -25,28 +25,17 @@ export async function main(event, context, callback) {
       callback(null, response)
       return
     }
-    // photo = await Photo.destroy({
-    //   where: { id },
-    // })
-    // if (!photo) {
-    //   const response = {
-    //     statusCode: 404,
-    //     body: JSON.stringify({ error: 'not found' }),
-    //   }
-    //   callback(null, response)
-    //   return
-    // }
   } catch (err) {
-    console.log('Unable to delete a Photo', err)
+    console.log('Unable to delete a Book', err)
     const response = {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Unable to delete a Photo' }),
+      body: JSON.stringify({ error: 'Unable to delete a Book' }),
     }
     callback(null, response)
     return
   }
 
-  // the photo was deteled
+  // the book was deteled
   const response = {
     statusCode: 200,
     body: JSON.stringify({ status: 'success' }),
