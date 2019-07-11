@@ -38,6 +38,17 @@ functions:
           method: get
           private: false
 
+  booksList: # http endpoint, which returns all books
+    handler: api/src/controllers/books/list.main
+    description: list all books
+    events:
+      - http:
+          path: books
+          method: get
+          private: false
+          cors: true
+
+
   booksPost: # http endpoint, which creates a record in DB, generaes unique book id
     handler: api/src/controllers/books/create.main
     description: ('C'RUD) - photo

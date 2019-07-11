@@ -10,29 +10,23 @@ import Book from '../../src/models/book'
 const request = supertest(config().HOST)
 const { expect } = chai // BDD/TDD assertion library
 
-// function createTestBook(location, daysAgo) {
-//   const createdAt = moment().subtract(daysAgo, 'days').add(3, 'minutes')
-//   const updatedAt = createdAt
-//   const title = 'test title'
-//   const description = 'test description'
-//   const author = 'test author'
-//   const tags = 'test tags'
-//   // create and safe record
-//   let book
-//   try {
-//     book = Book.create({
-//       createdAt,
-//       updatedAt,
-//       title,
-//       description,
-//       author,
-//       tags,
-//     })
-//   } catch (err) {
-//     console.log('unable to create Book', err)
-//   }
-//   return book
-// }
+function createTestBook({
+  title, description, author, tags,
+}) {
+  // create and safe record
+  let book
+  try {
+    book = Book.create({
+      title,
+      description,
+      author,
+      tags,
+    })
+  } catch (err) {
+    console.log('unable to create Book', err)
+  }
+  return book
+}
 
 
 describe('hello world', () => {
@@ -86,6 +80,31 @@ describe('books', () => {
       expect(response.body.book.description).to.equal(description)
       expect(response.body.book.author).to.equal(author)
       expect(response.body.book.tags).to.equal(tags)
+    })
+  })
+
+  describe('list', () => {
+    it('should be able to retrieve all books', async () => {
+      createTestBook({
+        title: 'book 1',
+        description: 'descriuption 1',
+        author: 'author 1',
+        tags: 'test, one, two, tree',
+      })
+      createTestBook({
+        title: 'book 2',
+        description: 'descriuption 2',
+        author: 'author 2',
+        tags: 'test, one, two, tree',
+      })
+      const response =
+        await request
+          .get('/books')
+          .set('Content-Type', 'application/json')
+
+      expect(response.status).to.equal(200)
+      expect(response.body.status).to.equal('success')
+      expect(response.body.books.length).to.equal(2)
     })
   })
 })
