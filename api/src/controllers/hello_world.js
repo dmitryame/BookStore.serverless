@@ -3,12 +3,12 @@ export async function main(event, context, callback) {
   // parameters passed into the call
   // console.log("debug:", 1)
 
-  const message = 'Hello Wisaw world!'
+  const message = 'Hello Books world!'
 
   let response
   try {
     response = {
-      statusCode: 201,
+      statusCode: 200,
       body: JSON.stringify(message),
     }
     // console.log("debug:", 4)
