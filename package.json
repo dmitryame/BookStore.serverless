@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "./node_modules/serverless/bin/serverless deploy -v --stage",
     "info": "./node_modules/serverless/bin/serverless info -v --stage",
-    "log": "./node_modules/serverless/bin/serverless logs -f funName -t --stage",
+    "log": "./node_modules/serverless/bin/serverless logs -f booksPost -t --stage",
     "test": "./node_modules/nyc/bin/nyc.js --reporter=html ./node_modules/mocha/bin/mocha --exit --require babel-core/register ./api/tests/**/*.js --timeout 30000",
     "eslint": "./node_modules/eslint/bin/eslint.js ./api/** ./migrations/** ./config/**",
     "migrate": "./node_modules/.bin/sequelize db:migrate --env",

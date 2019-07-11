@@ -55,7 +55,7 @@ describe('books', () => {
   })
 
   describe('create', () => {
-    it.only('should not be able to post a book with no parameters', async () => {
+    it('should not be able to create a book with no parameters', async () => {
       const response =
       await request
         .post('/books')
@@ -63,6 +63,29 @@ describe('books', () => {
 
       expect(response.status).to.equal(400)
       expect(response.body.error).to.equal('parameters missing')
+    })
+
+    it('should be able to create a book with right parameters', async () => {
+      const title = 'test title'
+      const description = 'test description'
+      const author = 'test author'
+      const tags = 'test tags'
+
+      const response =
+        await request
+          .post('/books')
+          .set('Content-Type', 'application/json')
+          .send({ title })
+          .send({ description })
+          .send({ author })
+          .send({ tags })
+
+      expect(response.status).to.equal(201)
+      expect(response.body.status).to.equal('success')
+      expect(response.body.book.title).to.equal(title)
+      expect(response.body.book.description).to.equal(description)
+      expect(response.body.book.author).to.equal(author)
+      expect(response.body.book.tags).to.equal(tags)
     })
   })
 })

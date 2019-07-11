@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
   // parameters passed into the call
-  // console.log("debug:", 1)
+  console.log('debug:', 1)
 
   const message = 'Hello Books world!'
 
