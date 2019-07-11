@@ -3,10 +3,9 @@ export async function main(event, context, callback) {
   // parameters passed into the call
   // console.log("debug:", 1)
 
-  const message = 'Hello WiSaw world!'
+  const message = 'Hello Books world!'
 
   let response
-
   try {
     response = {
       statusCode: 200,

@@ -7,9 +7,7 @@ import chai from 'chai'
 import axios from 'axios'
 import { config } from '../../../.env.test'
 
-import Photo from '../../src/models/photo'
-import ContactForm from '../../src/models/contactForm'
-import AbuseReport from '../../src/models/abuseReport'
+import Book from '../../src/models/book'
 
 const request = supertest(config().HOST)
 const { expect } = chai // BDD/TDD assertion library
@@ -18,14 +16,13 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function createTestPhoto(location, daysAgo) {
-  const guid = uuid()
+function createTestBook(location, daysAgo) {
   const createdAt = moment().subtract(daysAgo, 'days').add(3, 'minutes')
   const updatedAt = createdAt
   const active = true
   const likes = 3
   // create and safe record
-  let photo
+  let book
   try {
     photo = Photo.create({
       uuid: guid,
@@ -42,18 +39,32 @@ function createTestPhoto(location, daysAgo) {
   return photo
 }
 
-describe('photos', () => {
-  beforeEach(async () => {
-    await Photo.destroy({
-      where: {},
-    })
-    await ContactForm.destroy({
-      where: {},
-    })
-    await AbuseReport.destroy({
-      where: {},
-    })
+
+describe('hello world', () => {
+  it.only('should respond to hello world get', async () => {
+    const response =
+    await request
+      .get('/hello')
+
+    expect(response.status).to.equal(200)
+    expect(response.body).to.equal('Hello Books world!')
   })
+})
+
+
+describe('books', () => {
+  // beforeEach(async () => {
+  //   await Photo.destroy({
+  //     where: {},
+  //   })
+  //   await ContactForm.destroy({
+  //     where: {},
+  //   })
+  //   await AbuseReport.destroy({
+  //     where: {},
+  //   })
+  // })
+
   describe('create', () => {
     it('should not be able to post a photo with no parameters', async () => {
       const response =
