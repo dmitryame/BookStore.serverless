@@ -10,21 +10,8 @@ export async function main(event, context, callback) {
 
   // delete books
   // update photos
-  let book
   try {
-    book = await Book.update(
-      { active: false },
-      { where: { id } },
-    )
-
-    if (book[0] === 0) {
-      const response = {
-        statusCode: 404,
-        body: JSON.stringify({ error: 'not found' }),
-      }
-      callback(null, response)
-      return
-    }
+    await Book.destroy({ where: { id } })
   } catch (err) {
     console.log('Unable to delete a Book', err)
     const response = {

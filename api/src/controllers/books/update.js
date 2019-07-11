@@ -12,11 +12,12 @@ export async function main(event, context, callback) {
   const data = JSON.parse(event.body)
   // console.log({data})
 
-  const uuid = data ? data.uuid : null
-  const location = data ? data.location : null
-  const likes = 0 // have to privude default value since this column does not allow nulls
+  const title = data ? data.title : null
+  const description = data ? data.descrition : null
+  const author = data ? data.author : null
+  const tags = data ? data.tags : null
 
-  if (!data || !uuid || !location) {
+  if (!data || !title || !description || !author || !tags) {
     console.log('setting status to 400')
     const response = {
       statusCode: 400,
@@ -26,27 +27,25 @@ export async function main(event, context, callback) {
     return false
   }
 
-  console.log('uuid:', uuid)
-  console.log('location:', location)
-
   const createdAt = moment()
   const updatedAt = createdAt
 
   // create and safe record
   let book
   try {
-    book = await Book.create({
-      uuid,
-      location,
-      likes,
+    book = await Book.update({
+      title,
+      description,
+      author,
+      tags,
       createdAt,
       updatedAt,
     })
   } catch (err) {
-    console.log('unable to create Book', err)
+    console.log('unable to update Book', err)
     const response = {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Unable to create a new Book' }),
+      body: JSON.stringify({ error: 'Unable to update a Book' }),
     }
     callback(null, response)
     return false

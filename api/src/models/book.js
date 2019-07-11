@@ -8,17 +8,21 @@ const Book = sequelize.define('Book', {
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  uuid: {
-    type: Sequelize.UUID,
+  title: {
+    type: Sequelize.TEXT,
     allowNull: false,
   },
-  location: {
-    type: Sequelize.GEOMETRY('POINT'),
+  description: {
+    type: Sequelize.TEXT,
     allowNull: false,
   },
-  likes: {
+  author: {
+    type: Sequelize.TEXT,
     allowNull: false,
-    type: Sequelize.INTEGER,
+  },
+  tags: {
+    type: Sequelize.TEXT,
+    allowNull: true,
   },
   createdAt: {
     allowNull: false,
@@ -27,20 +31,6 @@ const Book = sequelize.define('Book', {
   updatedAt: {
     allowNull: false,
     type: Sequelize.DATE,
-  },
-  active: {
-    allowNull: false,
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-}, {
-  getterMethods: {
-    getImgUrl() {
-      return `https://s3.amazonaws.com/${process.env.IMAGE_BUCKET}/${this.id}`
-    },
-    getThumbUrl() {
-      return `https://s3.amazonaws.com/${process.env.IMAGE_BUCKET}/${this.id}-thumb`
-    },
   },
 })
 
