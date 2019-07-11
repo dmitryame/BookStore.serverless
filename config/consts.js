@@ -17,6 +17,12 @@ export const sequelize = new Sequelize(process.env.DATABASE_URL, {
   operatorsAliases: Sequelize.Op, // use Sequelize.Op
 })
 
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+  'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
+  'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+}
+
 sequelize
   .authenticate()
   .then(() => console.log('Connection to database has been established successfully.'))

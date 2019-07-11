@@ -1,4 +1,5 @@
 import Book from '../../models/book'
+import corsHeaders from '../../../../config/consts'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -25,11 +26,7 @@ export async function main(event, context, callback) {
     console.log('setting status to 400')
     const response = {
       statusCode: 400,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'parameters missing' }),
     }
     callback(null, response)
@@ -49,11 +46,7 @@ export async function main(event, context, callback) {
     console.log('unable to create Book', err)
     const response = {
       statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      },
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Unable to create a new Book' }),
     }
     callback(null, response)
@@ -63,11 +56,7 @@ export async function main(event, context, callback) {
   // Resond to request indicating the book was created
   const response = {
     statusCode: 201,
-    headers: {
-      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-      'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-    },
+    headers: corsHeaders,
     body: JSON.stringify({
       status: 'success',
       book,
