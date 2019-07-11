@@ -36,7 +36,7 @@ const { expect } = chai // BDD/TDD assertion library
 
 
 describe('hello world', () => {
-  it.only('should respond to hello world get', async () => {
+  it('should respond to hello world get', async () => {
     const response =
     await request
       .get('/hello')
@@ -55,7 +55,7 @@ describe('books', () => {
   })
 
   describe('create', () => {
-    it('should not be able to post a book with no parameters', async () => {
+    it.only('should not be able to post a book with no parameters', async () => {
       const response =
       await request
         .post('/books')

@@ -43,7 +43,7 @@ functions:
     description: ('C'RUD) - photo
     events:
       - http:
-          path: photos
+          path: books
           method: post
           private: false
           cors: true
@@ -53,7 +53,7 @@ functions:
     description: (C'R'UD) - photo
     events:
       - http:
-          path: photos/{id}
+          path: books/{id}
           method: get
           cors: true
 
@@ -62,7 +62,7 @@ functions:
     description: (CR'U'D) - photo
     events:
       - http:
-          path: photos
+          path: books
           method: post
           private: false
           cors: true
@@ -72,6 +72,6 @@ functions:
     description: (CRU'D') - photo
     events:
       - http:
-          path: photos/{id}
+          path: books/{id}
           method: delete
           private: false
