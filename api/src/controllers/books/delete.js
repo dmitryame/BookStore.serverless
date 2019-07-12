@@ -1,4 +1,5 @@
 import Book from '../../models/book'
+import corsHeaders from '../../../../config/consts'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -11,21 +12,32 @@ export async function main(event, context, callback) {
   // delete books
   // update photos
   try {
+    const book = await Book.findOne({
+      where: {
+        id,
+      },
+    })
+    if (!book) {
+      callback(null, {
+        statusCode: 404,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: 'Book not found' }),
+      })
+      return false
+    }
     await Book.destroy({ where: { id } })
   } catch (err) {
     console.log('Unable to delete a Book', err)
-    const response = {
+    callback(null, {
       statusCode: 500,
       body: JSON.stringify({ error: 'Unable to delete a Book' }),
-    }
-    callback(null, response)
-    return
+    })
+    return false
   }
-
   // the book was deteled
-  const response = {
+  callback(null, {
     statusCode: 200,
     body: JSON.stringify({ status: 'success' }),
-  }
-  callback(null, response)
+  })
+  return true
 }

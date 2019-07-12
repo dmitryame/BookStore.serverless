@@ -78,11 +78,11 @@ functions:
           private: false
           cors: true
 
-  # booksDelete: # http endpoint
-  #   handler: api/src/controllers/books/delete.main
-  #   description: (CRU'D') - photo
-  #   events:
-  #     - http:
-  #         path: books/{id}
-  #         method: delete
-  #         private: false
+  booksDelete: # http endpoint
+    handler: api/src/controllers/books/delete.main
+    description: (CRU'D') - photo
+    events:
+      - http:
+          path: books/{id}
+          method: delete
+          private: false

@@ -172,7 +172,6 @@ describe('books', () => {
       expect(response.body.error).to.equal('Book not found')
     })
 
-
     it('should be able to update a book', async () => {
       const testBook = await createTestBook({
         title: 'book 1',
@@ -191,6 +190,36 @@ describe('books', () => {
           .send({ tags: `ggg ${testBook.tags}` })
 
       expect(response.status).to.equal(201)
+      expect(response.body.status).to.equal('success')
+    })
+  })
+
+
+  describe('delete', () => {
+    it('should not be able to delete a non existing book', async () => {
+      const response =
+      await request
+        .delete('/books/1')
+        .set('Content-Type', 'application/json')
+
+      expect(response.status).to.equal(404)
+      expect(response.body.error).to.equal('Book not found')
+    })
+
+    it('should be able to delete a book', async () => {
+      const testBook = await createTestBook({
+        title: 'book 1',
+        description: 'descriuption 1',
+        author: 'author 1',
+        tags: 'test, one, two, tree',
+      })
+
+      const response =
+        await request
+          .delete(`/books/${testBook.id}`)
+          .set('Content-Type', 'application/json')
+
+      expect(response.status).to.equal(200)
       expect(response.body.status).to.equal('success')
     })
   })
