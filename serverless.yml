@@ -51,7 +51,7 @@ functions:
 
   booksPost: # http endpoint, which creates a record in DB, generaes unique book id
     handler: api/src/controllers/books/create.main
-    description: ('C'RUD) - photo
+    description: ('C'RUD) - book
     events:
       - http:
           path: books
@@ -61,23 +61,23 @@ functions:
 
   booksGet: # http endpoint
     handler: api/src/controllers/books/read.main
-    description: (C'R'UD) - photo
+    description: (C'R'UD) - book
     events:
       - http:
           path: books/{id}
           method: get
           cors: true
-  
-  # booksPut: # http endpoint, which updates a record in DB
-  #   handler: api/src/controllers/books/update.main
-  #   description: (CR'U'D) - photo
-  #   events:
-  #     - http:
-  #         path: books
-  #         method: post
-  #         private: false
-  #         cors: true
-  #
+
+  booksPut: # http endpoint, which updates a record in DB
+    handler: api/src/controllers/books/update.main
+    description: (CR'U'D) - book
+    events:
+      - http:
+          path: books/{id}
+          method: put
+          private: false
+          cors: true
+
   # booksDelete: # http endpoint
   #   handler: api/src/controllers/books/delete.main
   #   description: (CRU'D') - photo
