@@ -10,7 +10,12 @@ export async function main(event, context, callback) {
   // create and safe record
   let books
   try {
-    books = await Book.findAll()
+    books = await Book.findAll({
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ['title', 'ASC'],
+      ],
+    })
   } catch (err) {
     console.log('unable to load Books', err)
     const response = {
@@ -28,7 +33,6 @@ export async function main(event, context, callback) {
     headers: corsHeaders,
     body: JSON.stringify({
       status: 'success',
-      headers: corsHeaders,
       books,
     }),
   }

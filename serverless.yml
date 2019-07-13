@@ -48,7 +48,6 @@ functions:
           private: false
           cors: true
 
-
   booksPost: # http endpoint, which creates a record in DB, generaes unique book id
     handler: api/src/controllers/books/create.main
     description: ('C'RUD) - book

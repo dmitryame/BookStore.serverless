@@ -19,10 +19,7 @@ export const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
-  'Access-Control-Allow-Credentials': false, // Required for cookies, authorization headers with HTTPS
-  'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With',
-
+  'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
 }
 
 sequelize
