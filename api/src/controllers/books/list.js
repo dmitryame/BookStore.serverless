@@ -28,6 +28,7 @@ export async function main(event, context, callback) {
     headers: corsHeaders,
     body: JSON.stringify({
       status: 'success',
+      headers: corsHeaders,
       books,
     }),
   }
