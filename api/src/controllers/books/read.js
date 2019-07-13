@@ -1,5 +1,5 @@
 import Book from '../../models/book'
-import corsHeaders from '../../../../config/consts'
+import { corsHeaders } from '../../../../config/consts'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {

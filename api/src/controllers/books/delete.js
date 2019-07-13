@@ -1,5 +1,5 @@
 import Book from '../../models/book'
-import corsHeaders from '../../../../config/consts'
+import { corsHeaders } from '../../../../config/consts'
 
 // eslint-disable-next-line import/prefer-default-export
 export async function main(event, context, callback) {
@@ -30,6 +30,7 @@ export async function main(event, context, callback) {
     console.log('Unable to delete a Book', err)
     callback(null, {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: 'Unable to delete a Book' }),
     })
     return false
@@ -37,6 +38,7 @@ export async function main(event, context, callback) {
   // the book was deteled
   callback(null, {
     statusCode: 200,
+    headers: corsHeaders,
     body: JSON.stringify({ status: 'success' }),
   })
   return true

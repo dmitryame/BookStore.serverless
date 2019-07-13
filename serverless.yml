@@ -37,6 +37,7 @@ functions:
           path: hello
           method: get
           private: false
+          cors: true
 
   booksList: # http endpoint, which returns all books
     handler: api/src/controllers/books/list.main
@@ -85,3 +86,4 @@ functions:
           path: books/{id}
           method: delete
           private: false
+          cors: true
